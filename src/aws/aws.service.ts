@@ -5,10 +5,10 @@ import { S3 } from '@aws-sdk/client-s3';
 @Injectable()
 export class AwsService {
   private readonly s3Client = new S3({
-    region: this.configService.get('AWS_S3_REGION'),
+    region: this.configService.getOrThrow('AWS_S3_REGION'),
     credentials: {
-      accessKeyId: this.configService.get('AWS_S3_ACCESS_KEY_ID'),
-      secretAccessKey: this.configService.get('AWS_S3_SECRET_ACCESS_KEY'),
+      accessKeyId: this.configService.getOrThrow('AWS_S3_ACCESS_KEY_ID'),
+      secretAccessKey: this.configService.getOrThrow('AWS_S3_SECRET_ACCESS_KEY'),
     }
   })
 

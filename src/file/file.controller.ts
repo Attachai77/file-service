@@ -1,13 +1,14 @@
 import {
   Controller,
   HttpStatus,
-  InternalServerErrorException,
+  InternalServerErrorException, MaxFileSizeValidator, ParseFilePipe,
   Post,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('file')
 export class FileController {
@@ -30,6 +31,7 @@ export class FileController {
         data: resp,
       }
     } catch (e) {
+      if(e.status) throw e;
       throw new InternalServerErrorException(e.message);
     }
   }

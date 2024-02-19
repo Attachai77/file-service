@@ -9,5 +9,7 @@ export default () => ({
     AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY,
     UPLOAD_RATE_TTL: process.env.UPLOAD_RATE_TTL,
     UPLOAD_RATE_LIMIT: process.env.UPLOAD_RATE_LIMIT,
+    UPLOAD_SIZE_LIMIT: process.env.UPLOAD_SIZE_LIMIT,
+    UPLOAD_MIMETYPES: process.env.UPLOAD_MIMETYPES,
   }
 });
