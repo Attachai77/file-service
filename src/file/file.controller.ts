@@ -1,4 +1,4 @@
-import { Controller, HttpCode, HttpStatus, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Param, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 
@@ -18,7 +18,7 @@ export class FileController {
 
     return  {
       statusCode: HttpStatus.CREATED,
-      message: 'ok',
+      message: 'File uploaded successfully',
       data: resp,
     }
   }

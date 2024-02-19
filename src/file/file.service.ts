@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { uuid } from 'uuidv4';
 import { AwsService } from '../aws/aws.service';
 
 @Injectable()
@@ -10,7 +11,9 @@ export class FileService {
 
   upload(file: Express.Multer.File) {
     const buffer = file.buffer;
-    const fileName = file.originalname;
+    const mimeType = file.mimetype;
+    const fileName = `${uuid()}.${mimeType.split('/')[1]}`;
+
 
     return this.awsService.uploadToS3(buffer, fileName);
   }
