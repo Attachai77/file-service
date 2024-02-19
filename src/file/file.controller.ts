@@ -1,4 +1,4 @@
-import { Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, HttpCode, HttpStatus, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 
@@ -11,7 +11,15 @@ export class FileController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return this.fileService.upload(file);
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const resp = await this.fileService.upload(file);
+
+    return  {
+      statusCode: HttpStatus.CREATED,
+      message: 'ok',
+      data: resp,
+    }
   }
 }

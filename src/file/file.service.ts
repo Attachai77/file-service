@@ -6,8 +6,7 @@ export class FileService {
 
   constructor(
     private readonly awsService: AwsService,
-  ) {
-  }
+  ) {}
 
   upload(file: Express.Multer.File) {
     const buffer = file.buffer;
