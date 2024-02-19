@@ -7,9 +7,15 @@ export default () => ({
     AWS_S3_BUCKET: process.env.AWS_S3_BUCKET,
     AWS_S3_ACCESS_KEY_ID: process.env.AWS_S3_ACCESS_KEY_ID,
     AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY,
+
     UPLOAD_RATE_TTL: process.env.UPLOAD_RATE_TTL,
     UPLOAD_RATE_LIMIT: process.env.UPLOAD_RATE_LIMIT,
     UPLOAD_SIZE_LIMIT: process.env.UPLOAD_SIZE_LIMIT,
     UPLOAD_MIMETYPES: process.env.UPLOAD_MIMETYPES,
+
+    MAIL_ID: process.env.MAIL_ID,
+    MAIL_PASS: process.env.MAIL_PASS,
+    MAIL_HOST: process.env.MAIL_HOST,
+    MAIL_PORT: process.env.MAIL_PORT,
   }
 });

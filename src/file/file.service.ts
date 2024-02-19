@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import { AwsService } from '../aws/aws.service';
 import { ConfigService } from '@nestjs/config';
 
@@ -16,7 +16,7 @@ export class FileService {
 
     const buffer = file.buffer;
     const mimeType = file.mimetype;
-    const fileName = `${uuid()}.${mimeType.split('/')[1]}`;
+    const fileName = `${uuidv4()}.${mimeType.split('/')[1]}`;
 
     return this.awsService.uploadToS3(buffer, fileName);
   }

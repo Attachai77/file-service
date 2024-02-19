@@ -5,6 +5,7 @@ import { AwsModule } from '../aws/aws.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { ConfigService } from '@nestjs/config';
         limit: configService.get('UPLOAD_RATE_LIMIT'),
       }],
     }),
-    AwsModule
+    AwsModule,
+    MailModule
   ],
   providers: [FileService, {
     provide: APP_GUARD,

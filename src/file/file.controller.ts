@@ -1,20 +1,21 @@
 import {
   Controller,
   HttpStatus,
-  InternalServerErrorException, MaxFileSizeValidator, ParseFilePipe,
+  InternalServerErrorException,
   Post,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
-import { ConfigService } from '@nestjs/config';
+import { MailService } from '../mail/mail.service';
 
 @Controller('file')
 export class FileController {
 
   constructor(
     private readonly fileService: FileService,
+    private readonly mailService: MailService,
   ) {}
 
   @Post('upload')
@@ -24,6 +25,8 @@ export class FileController {
   ) {
     try {
       const resp = await this.fileService.upload(file);
+
+      this.mailService.sendMail();
 
       return  {
         statusCode: HttpStatus.CREATED,
