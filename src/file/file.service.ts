@@ -22,6 +22,8 @@ export class FileService {
   }
 
   private validateFile(file: Express.Multer.File) {
+    if(!file) throw new BadRequestException('No file uploaded');
+
     const uploadMimeTypes = this.configService.getOrThrow('UPLOAD_MIMETYPES');
     const allowedMimeTypes = uploadMimeTypes.split(',');
 

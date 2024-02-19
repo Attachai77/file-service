@@ -18,8 +18,10 @@ export class MailService {
     });
   }
 
-  sendUploadedEmail(fileName: string) {
-    const email = 'attachai.jobs@gmail.com'
+  sendUploadedEmail(
+    email: string,
+    fileName: string
+  ) {
     const subject = 'File uploaded';
     const template = 'simple.hbs';
 

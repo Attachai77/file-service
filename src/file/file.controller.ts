@@ -1,14 +1,21 @@
 import {
+  Body,
   Controller,
   HttpStatus,
   InternalServerErrorException,
-  Post,
+  Post, Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 import { MailService } from '../mail/mail.service';
+import { IsEmail } from 'class-validator';
+
+export class UploadDto {
+  @IsEmail()
+  email: string;
+}
 
 @Controller('file')
 export class FileController {
@@ -22,11 +29,13 @@ export class FileController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
     @UploadedFile() file: Express.Multer.File,
+    @Body() body: UploadDto,
   ) {
     try {
       const resp = await this.fileService.upload(file);
 
       this.mailService.sendUploadedEmail(
+        body.email,
         file.originalname,
       );
 
