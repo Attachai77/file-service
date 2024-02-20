@@ -58,6 +58,48 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## API
+
+```bash
+
+# cURL
+$ curl --location 'http://localhost:3000/file/upload' \
+--form 'file=@"/path/bar.jpeg"' \
+--form 'email="foo@gmail.com"'
+```
+
+## Responses
+
+Many API endpoints return the JSON representation of the resources created or edited. However, if an invalid request is submitted, or some other error occurs, Gophish returns a JSON response in the following format:
+
+```javascript
+{
+  "statusCode" : number,
+  "message" : string,
+  "data"    : {
+    "requestId" : "string",
+  }
+}
+```
+
+The `statusCode` attribute contains the HTTP status code for the request. This is useful for debugging, as it can be used to quickly determine the type of error that is being returned.
+
+The `message` attribute contains a message commonly used to indicate errors or, in the case of deleting a resource, success that the resource was properly deleted.
+
+The `data` attribute contains any other metadata associated with the response. This will be an escaped JSON object containing the requestId of the request.
+
+## Status Codes
+
+Gophish returns the following status codes in its API:
+
+| Status Code | Description |
+| :--- | :--- |
+| 200 | `OK` |
+| 201 | `CREATED` |
+| 400 | `BAD REQUEST` |
+| 404 | `NOT FOUND` |
+| 500 | `INTERNAL SERVER ERROR` |
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
