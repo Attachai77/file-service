@@ -34,10 +34,7 @@ export class FileController {
     try {
       const resp = await this.fileService.upload(file);
 
-      this.mailService.sendUploadedEmail(
-        body.email,
-        file.originalname,
-      );
+      this.mailService.sendUploadedEmail(body.email,  file.originalname,);
 
       return  {
         statusCode: HttpStatus.CREATED,

@@ -17,7 +17,7 @@ export class AwsService {
   ) {}
 
   async uploadToS3(buffer: Buffer, fileName: string) {
-    const AWS_S3_BUCKET = this.configService.get('AWS_S3_BUCKET')
+    const AWS_S3_BUCKET = this.configService.getOrThrow('AWS_S3_BUCKET')
 
     const s3Resp = await this.s3Client.putObject({
       Bucket: AWS_S3_BUCKET,
