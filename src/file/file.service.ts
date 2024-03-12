@@ -39,7 +39,14 @@ export class FileService {
     }
   }
 
-  getFile(fileName: string) {
-    return this.awsService.getObjectS3(fileName);
+  async getFile(fileName: string) {
+    if(!fileName) throw new BadRequestException('No file name provided');
+
+    const url = await this.awsService.getSignedUrlS3(fileName);
+
+    return {
+      url,
+      fileName
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { S3 } from '@aws-sdk/client-s3';
+import { GetObjectCommand, S3 } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 @Injectable()
 export class AwsService {
@@ -31,21 +32,15 @@ export class AwsService {
     }
   }
 
-  async getObjectS3(fileName: string) {
+
+  async getSignedUrlS3(fileName: string) {
     const AWS_S3_BUCKET = this.configService.getOrThrow('AWS_S3_BUCKET')
 
-    const s3Resp = await this.s3Client.getObject({
+    const command = new GetObjectCommand({
       Bucket: AWS_S3_BUCKET,
       Key: fileName,
     })
 
-    const file = await s3Resp.Body.transformToString('base64')
-
-    return {
-      file
-    }
-  }
-
-  async getSignedUrlS3(fileName: string) {
+    return  getSignedUrl(this.s3Client, command, { expiresIn: 60 })
   }
 }
