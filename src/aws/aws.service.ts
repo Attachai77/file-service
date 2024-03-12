@@ -26,7 +26,26 @@ export class AwsService {
     })
 
     return {
-      requestId: s3Resp?.$metadata?.requestId,
+      requestId: s3Resp?.$metadata,
+      fileName,
     }
+  }
+
+  async getObjectS3(fileName: string) {
+    const AWS_S3_BUCKET = this.configService.getOrThrow('AWS_S3_BUCKET')
+
+    const s3Resp = await this.s3Client.getObject({
+      Bucket: AWS_S3_BUCKET,
+      Key: fileName,
+    })
+
+    const file = await s3Resp.Body.transformToString('base64')
+
+    return {
+      file
+    }
+  }
+
+  async getSignedUrlS3(fileName: string) {
   }
 }

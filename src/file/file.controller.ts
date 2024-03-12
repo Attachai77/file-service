@@ -1,8 +1,8 @@
 import {
   Body,
-  Controller,
+  Controller, Get,
   HttpStatus,
-  InternalServerErrorException,
+  InternalServerErrorException, Param,
   Post, Req,
   UploadedFile,
   UseInterceptors,
@@ -39,6 +39,23 @@ export class FileController {
       return  {
         statusCode: HttpStatus.CREATED,
         message: 'File uploaded successfully',
+        data: resp,
+      }
+    } catch (e) {
+      if(e.status) throw e;
+      throw new InternalServerErrorException(e.message);
+    }
+  }
+
+  @Get('/:id')
+  async getFile(
+    @Param('id') id: string
+  ) {
+    try {
+      const resp = await this.fileService.getFile(id);
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'File retrieved successfully',
         data: resp,
       }
     } catch (e) {

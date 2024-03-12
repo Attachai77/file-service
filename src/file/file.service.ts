@@ -38,4 +38,8 @@ export class FileService {
       throw new BadRequestException(`File size too large, max size is ${allowedSize / (1024 * 1024)}MB`);
     }
   }
+
+  getFile(fileName: string) {
+    return this.awsService.getObjectS3(fileName);
+  }
 }
