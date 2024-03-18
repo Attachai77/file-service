@@ -11,11 +11,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 import { MailService } from '../mail/mail.service';
 import { IsEmail } from 'class-validator';
-
-export class UploadDto {
-  @IsEmail()
-  email: string;
-}
+import { GetPresignedUrlDto, UploadDto } from './file.dto';
 
 @Controller('file')
 export class FileController {
@@ -39,6 +35,23 @@ export class FileController {
       return  {
         statusCode: HttpStatus.CREATED,
         message: 'File uploaded successfully',
+        data: resp,
+      }
+    } catch (e) {
+      if(e.status) throw e;
+      throw new InternalServerErrorException(e.message);
+    }
+  }
+
+  @Post('/presigned-url')
+  async getPresignedUrl(
+    @Body() body: GetPresignedUrlDto
+  ) {
+    try {
+      const resp = await this.fileService.getPresignedUrl(body);
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Presigned url generated successfully',
         data: resp,
       }
     } catch (e) {

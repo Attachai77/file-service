@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { AwsService } from '../aws/aws.service';
 import { ConfigService } from '@nestjs/config';
+import { GetPresignedUrlDto } from './file.dto';
 
 @Injectable()
 export class FileService {
@@ -49,4 +50,18 @@ export class FileService {
       fileName
     }
   }
+
+  async getPresignedUrl(body: GetPresignedUrlDto) {
+    const fileExt = body.fileName.split('.').pop();
+    if(!fileExt) throw new BadRequestException('Invalid file name');
+
+    const fileKey = `${uuidv4()}.${fileExt}`;
+    const url = await this.awsService.generatePresignedUrl(fileKey);
+
+    return {
+      url,
+      fileKey
+    }
+  }
+
 }
